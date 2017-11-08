@@ -4,7 +4,7 @@
 Limits of a function **f(x)** are the points on a graph of **f** at which
 it is not defined, but the points around the limits *point* in their direction.
 
-![Example 1](/images/l1.png)
+![Example 1](./images/l1.png)
 
 ##Example
 The graph plotted on the image above is the one of function
@@ -67,7 +67,7 @@ One that it approaches from the left,
 And another from the right.
 These are called the *right* and *left*-hand limits.
 
-![2 limits](/images/l2.png)
+![2 limits](./images/l2.png)
 
 However, only when these are equal can a function have a limit (described by the definiton above).
 

@@ -1,5 +1,5 @@
 '''
---  Mathematical and educational capabilities of Python --
+--  Mathematical graphing capabilities of Python --
 
 `helper`
     -- plot functions
@@ -13,10 +13,10 @@
         - Understaning the origin on the fibonacci numbers
 
     - aperyConstant
-        - Finding the Apéry's Constant
+        - Aproximating the Apéry's Constant
 
     - eulerConstant
-        - Finding the Euler's Constant
+        - Aproximating the Euler's Constant
 
 `functions`
     - linear function
@@ -34,15 +34,15 @@
     - circle
         - Plotting a circle
 
-    `trig`
-        - Trigonometry:
-            - sin
-            - cos
-            - tg
-            - ctg
-            - arctg
-            - arcsin
-            - arccos
+`trig`
+    - Trigonometry:
+        - sin
+        - cos
+        - tg
+        - ctg
+        - arctg
+        - arcsin
+        - arccos
 
 `threeD`
     - surface
@@ -64,6 +64,10 @@
 
     - solveVisual
         -Solving a set of mutually equal equations visually
+
+`series`
+    - powerSeries
+        - Drawing parametrized power series and their sum
 
 '''
 
@@ -88,15 +92,27 @@ scale=100.0  # x ranges between 0 and scale / or -scale to scale
 
 class helper:
     
-    def plot(x,y, name=""):
+    def plot(self, x,y, name=""):
         plt.axhline(0, color='grey', linewidth=0.5)
         plt.axvline(0, color='grey', linewidth=0.5)
         plt.plot(x, y)
         plt.title(name)
         plt.show()
 
+    def plotMultiple(self, arr, name=""):
+        plt.axhline(0, color='grey', linewidth=0.5)
+        plt.axvline(0, color='grey', linewidth=0.5)
+        plt.title(name)
 
-    def plotPow(x,y, name=""):
+        for cords in arr:
+            plt.plot(cords[0], label=cords[1])
+
+        plt.legend()
+        plt.show()
+        
+
+
+    def plotPow(self, x,y, name=""):
         plt.axhline(0, color='grey', linewidth=0.5)
         plt.axvline(0, color='grey', linewidth=0.5)
         plt.plot(x, y)
@@ -108,7 +124,7 @@ class helper:
         plt.xlim(auto=True)
 
 
-    def plotExp(x,y, name=""):
+    def plotExp(self, x,y, name=""):
         plt.axhline(0, color='grey', linewidth=0.5)
         plt.axvline(0, color='grey', linewidth=0.5)
         plt.plot(x, y)
@@ -120,7 +136,7 @@ class helper:
         plt.xlim(auto=True)
 
 
-    def plotTrig(x,y, name=""):
+    def plotTrig(self, x,y, name=""):
         plt.axhline(0, color='grey', linewidth=0.5)
         plt.axvline(0, color='grey', linewidth=0.5)
         plt.plot(x, y)
@@ -132,7 +148,7 @@ class helper:
         plt.xlim(auto=True)
 
 
-    def plot3D(x, y, z, name=""):
+    def plot3D(self, x, y, z, name=""):
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         surf = ax.plot_surface(x, y, z, cmap=cm.coolwarm, linewidth=2, antialiased=True)
@@ -141,7 +157,7 @@ class helper:
         plt.show()
 
 
-    def plot3D_line(x, y, z, name=""):
+    def plot3D_line(self, x, y, z, name=""):
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         ax.plot(x, y, z)
@@ -150,7 +166,7 @@ class helper:
         plt.show()
 
 
-    def plotCube(x, y, z,name=""):
+    def plotCube(self, x, y, z,name=""):
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         ax.legend()
@@ -158,7 +174,7 @@ class helper:
         plt.title(name)
         plt.show()
 
-    def plotEuler(x,y, name="-e-"):
+    def plotEuler(self, x,y, name="-e-"):
         plt.axhline(0, color='grey', linewidth=0.5)
         plt.axhline(1, color='red', linewidth=0.5)
         plt.axvline(0, color='grey', linewidth=0.5)
@@ -170,9 +186,9 @@ class helper:
         plt.ylim(auto=True)
         plt.xlim(auto=True)
 
-class examples:
+class examples(helper):
 
-    def steps():
+    def steps(self):
         '''
         Approximate the 'Heaviside Step Function' of increasing 'steps'
         (http://mathworld.wolfram.com/HeavisideStepFunction.html)
@@ -189,12 +205,12 @@ class examples:
 
 
         for i in range(details,int(scale)*details):
-            y[i]= y[i-1]+1/np.power((i%details-0.9),tune*2)/np.power(scale,tune)
+            y[i]= y[i-1]+1/np.power((i%details-0.99),tune*2)/np.power(scale,tune)
 
-        helper.plot(x,y)
+        self.plot(x,y)
 
 
-    def goldenRatio(a=1,b=1):
+    def goldenRatio(self, a=1,b=1):
         '''
         Getting the Golden Ratio with 'Brady numbers'
         (http://www.numberphile.com/videos/brady_numbers.html)
@@ -215,10 +231,10 @@ class examples:
         for i in range(2,int(scale)*details):
             z[i]= y[i]/y[i-1]
 
-        helper.plotPow(x,z, "The golden ratio")
+        self.plotPow(x,z, "The golden ratio")
 
 
-    def aperyConstant(n=10000, max=10):
+    def aperyConstant(self, n=10000, max=10):
         '''
         Getting the Apéry's Constant as demonstrated here:
         https://www.youtube.com/watch?v=ur-iLy4z3QE
@@ -236,14 +252,14 @@ class examples:
         num=0
         for i in range(0,int(n)*details):
             if( gcd( gcd(y[i][0],y[i][1]), y[i][2])  == 1 ):
-                num+=1;
+                num+=1
             if num>0:
                 z[i]= i/num
 
-        helper.plot(x,z)
+        self.plot(x,z)
 
 
-    def eulerConstant(dx=0.0001, n=10):
+    def eulerConstant(self, dx=0.0001, n=10):
         '''
         - Finding a number 'e' such that (e^dx-1)/dx = 1:
         https://www.youtube.com/watch?v=m2MIpDrF7Es
@@ -257,42 +273,42 @@ class examples:
         x = np.arange(0.0, n*100, 1/details)
         y = (np.power(x, dx) - 1) / dx
 
-        helper.plotEuler(x,y)
+        self.plotEuler(x,y)
 
         y = np.power( 1 + 1/x, x )
-        helper.plot(x,y)
+        self.plot(x,y)
 
-class functions:
+class functions(helper):
 
-    def linear(k=1,c=0):
+    def linear(self, k=1,c=0):
         x = np.arange(0, scale) 
         y= k*x+c
 
-        helper.plot(x,y)
+        self.plot(x,y)
 
 
-    def quadratic(a=1, b=1, c=0):
+    def quadratic(self, a=1, b=1, c=0):
         x = np.arange(-scale, scale, 1/details)
         y= a*np.power(x,2)+b*x+c
 
-        helper.plotPow(x,y)
+        self.plotPow(x,y)
         
 
-    def parabola(pow, a=0,k=1,b=0):
+    def parabola(self, selfpow, a=0,k=1,b=0):
         x = np.arange(-scale, scale, 1/details)
         y= k*np.power(x+a,pow)+b
 
-        helper.plotPow(x,y)
+        self.plotPow(x,y)
 
 
-    def hyperbola( pow, a=0, k=1, b=0):
+    def hyperbola(self, pow, a=0, k=1, b=0):
         x = np.arange(-scale, scale, 1/details)
         y= k*(1/np.power(x+a,pow))+b
 
-        helper.plotPow(x,y)
+        self.plotPow(x,y)
 
 
-    def exponential(base,k=1.0,b=0):
+    def exponential(self, base,k=1.0,b=0):
         x = np.arange(0, 10, 1/details)
         y = np.arange(0, 10, 1/details)
 
@@ -301,10 +317,10 @@ class functions:
             if np.isnan(y[i]):
                 y[i]=0 
 
-        helper.plotExp(x,y)
+        self.plotExp(x,y)
 
 
-    def log(base,k=1.0,b=0):
+    def log(self, base,k=1.0,b=0):
         x = np.arange(0, 10, 1/details)
         y = np.arange(0, 10, 1/details)
 
@@ -320,77 +336,77 @@ class functions:
             if np.isnan(y[i]):
                 y[i]=0 
 
-        helper.plotExp(x,y)
+        self.plotExp(x,y)
 
     
-    def circle():
+    def circle(self):
         x = np.arange(-scale, scale, 1/details)
 
         y=np.sin(x)
         x=np.cos(x)
 
-        helper.plot(x,y)
+        self.plot(x,y)
 
-    class trig:
+    class trig(helper):
         
-        def sin(a=1,b=0,w=0,k=1):
+        def sin(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
             y= a*np.sin(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def cos(a=1,b=0,w=0,k=1):
+        def cos(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
             y= a*np.cos(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def tg(a=1,b=0,w=0,k=1):
+        def tg(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
             y= a*np.tan(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def ctg(a=1,b=0,w=0,k=1):
+        def ctg(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
-            y= a*cot(k*x + w) + b
+            y= a/np.tan(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def arctg(a=1,b=0,w=0,k=1):
+        def arctg(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
             y= a*atan(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def arcsin(a=1,b=0,w=0,k=1):
+        def arcsin(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
             y= a*np.arcsin(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def arccos(a=1,b=0,w=0,k=1):
+        def arccos(self, a=1,b=0,w=0,k=1):
             x = np.arange(-scale, scale, 1/details)
             y= a*np.arccos(k*x + w) + b
 
-            helper.plotTrig(x,y)
+            self.plotTrig(x,y)
 
 
-        def cot(x):
+        def cot(self, x):
             if x==0:
                 return x
             x = np.divide(np.cos(x), np.sin(x))
             return x
 
-class threeD:
+class threeD(helper):
     
-    def surface(h=2,k=3,a=3,b=2,c=6):
+    def surface(self, h=2,k=3,a=3,b=2,c=6):
         x = np.arange(-scale, scale, 1/details)
         y = np.arange(-scale, scale, 1/details)
         x, y = np.meshgrid(x, y)
@@ -398,15 +414,15 @@ class threeD:
 
         z=h*x**a+k*y**b+c
 
-        helper.plot3D(x,y,z)
+        self.plot3D(x,y,z)
 
 
-    def cubeVol(a=1):
+    def cubeVol(self, a=1):
         x,y,z = np.mgrid[0:a:1/details, 0:a:1/details,  0:a:1/details]
-        helper.plotCube(x,y,z)
+        self.plotCube(x,y,z)
 
 
-    def TD_king():
+    def TD_king(self):
         x = np.arange(-scale, scale, 1/details)
         y = np.arange(-scale, scale, 1/details)
         x, y = np.meshgrid(x, y)
@@ -414,10 +430,10 @@ class threeD:
 
         z=(x**3/np.e-y**3/np.e)/(9*np.e**6)
 
-        helper.plot3D(x,y,z)
+        self.plot3D(x,y,z)
 
 
-    def three_D_line():
+    def three_D_line(self):
         x = np.arange(-scale, scale, 1/details)
         y = np.arange(-scale, scale, 1/details)
         z = np.arange(-scale, scale, 1/details)
@@ -426,9 +442,9 @@ class threeD:
             y[i]=x[i]**2
             z[i]=y[i]**2
 
-        helper.plot3D_line(x,y,z)
+        self.plot3D_line(x,y,z)
 
-    def plotPyramidSurf(v=np.array([[-1, -1, -1], [1, -1, -1], [1, 1, -1],  [-1, 1, -1], [0, 0, 1]]),name=""):
+    def plotPyramidSurf(self, v=np.array([[-1, -1, -1], [1, -1, -1], [1, 1, -1],  [-1, 1, -1], [0, 0, 1]]),name=""):
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         ax.scatter3D(v[:, 0], v[:, 1], v[:, 2])
@@ -444,13 +460,13 @@ class threeD:
 
 class solver:
         
-    def solve(eqs=[("x^2+2*x-4","0")]): 
+    def solve(self, eqs=[("x^2+2*x-4","0")]): 
         eqs = [Eq(sympify(eq),sympify(sol)) for eq, sol in eqs]
         print(solve_eq(eqs))
 
         #solve([("x^2+y^2","100"),("x^2-y","28")])
 
-    def solveVisual(eqs=["x^2+2*x", "2*x+9"]):
+    def solveVisual(self, eqs=["x^2+2*x", "2*x+9"]):
         eqs = [sympify(eq) for eq in eqs]
         eqsPlot=plotSym(eqs[0], show=False)
 
@@ -458,3 +474,20 @@ class solver:
             eqsPlot.extend(plotSym(eqs[i], show=False))
 
         eqsPlot.show()
+
+
+class series(helper):
+
+    def powerSeries(self, p=2, c=1):
+        # An = c*(1/n)^p
+        x = np.arange(1, scale, 1)
+        y = c*np.power(x,-p)
+
+        # Sn = A1+A2...An
+        s = [ np.sum( y[:n] ) for n in range(y.shape[0]) ]
+
+        self.plotMultiple([[y, "An"], [s, "Sn"]], str(c)[:5]+"* (1/n)^"+str(p)[:5])
+
+ 
+s = series()
+s.powerSeries(2)
